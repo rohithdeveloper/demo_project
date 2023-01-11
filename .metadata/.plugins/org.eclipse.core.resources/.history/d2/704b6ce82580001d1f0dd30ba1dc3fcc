@@ -1,0 +1,8 @@
+package Models;
+
+
+@Entity
+@Table(name = "roles")
+public class Role {
+
+}

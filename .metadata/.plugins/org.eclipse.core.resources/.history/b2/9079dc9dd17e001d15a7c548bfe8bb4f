@@ -1,0 +1,28 @@
+package com.cg.canteen.service;
+
+import java.util.List;
+
+
+import com.cg.canteen.dto.CustomerDto;
+
+
+public interface ICustomerServices {
+
+//	CustomerDto addCustomer(CustomerDto customer);
+
+	List<CustomerDto> viewCustomersList(CustomerDto customer);
+
+	CustomerDto updateCustomers(Integer customerId, CustomerDto customerdto);
+
+	void deleteCustomers(Integer customerId);
+
+	CustomerDto viewCustomers(Integer customerId);
+
+	List<CustomerDto> viewCustomersList();
+
+	String addEmployee(CustomerDto customerdto);
+
+
+
+	
+}

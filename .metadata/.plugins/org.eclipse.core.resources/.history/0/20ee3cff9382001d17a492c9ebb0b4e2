@@ -1,0 +1,100 @@
+package com.cg.Canteen.controllers;
+
+
+import static org.mockito.Mockito.doNothing;
+
+import static org.mockito.Mockito.when;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
+import org.mockito.junit.jupiter.MockitoExtension;
+
+import com.cg.canteen.controllers.CustomerController;
+import com.cg.canteen.dto.CustomerDto;
+import com.cg.canteen.service.ICustomerServices;
+
+
+
+@ExtendWith(MockitoExtension.class)
+public class TestControllers {
+	
+	@InjectMocks
+	CustomerController customerController;
+	
+	@Mock
+	ICustomerServices customerService;
+
+	
+	
+	@Test
+	void getAllCustomers() {
+		List<CustomerDto> customerdto= createCustomerDtoMockData();
+		when(customerService.viewCustomersList()).thenReturn(customerdto);
+		List<CustomerDto> customerdto1=customerController.viewCustomersList();
+		assert(customerdto.size()==customerdto1.size());
+	}
+	private List<CustomerDto> createCustomerDtoMockData() {
+		// TODO Auto-generated method stub
+		List<CustomerDto> customers=new ArrayList<>();
+		CustomerDto customerDto=new CustomerDto();
+		customerDto.setCustomerId(1);
+		customerDto.setCustomerName("hero");
+		customerDto.setEmail("roh@gmail.com");
+		customerDto.setMobileNo("3427684587");
+		return customers;
+	}
+	@Test
+	void addCustomers() {
+		CustomerDto customerdto=createCustomerDtoMockData1();
+		when(customerService.addCustomer(customerdto)).thenReturn(customerdto);
+		CustomerDto customerdto1=customerController.addCustomer(customerdto);
+		assert(customerdto.getCustomerId()==customerdto1.getCustomerId());
+	}
+	
+	private CustomerDto createCustomerDtoMockData1() {
+		// TODO Auto-generated method stub
+		CustomerDto customerDto=new CustomerDto();
+		customerDto.setCustomerId(1);
+		customerDto.setCustomerName("hero");
+		customerDto.setEmail("roh@gmail.com");
+		customerDto.setMobileNo("3427684587");
+		return customerDto;
+	
+	}
+	
+	@Test
+	void updateCustomers() {
+		CustomerDto customerdto=updateCustomerDtoMockData();
+		when(customerService.updateCustomers(1, customerdto)).thenReturn(customerdto);
+		CustomerDto customerdto1=customerController.updateCustomers(1, customerdto);
+		assert(customerdto.getCustomerId()==customerdto1.getCustomerId());
+		
+	}
+	private CustomerDto updateCustomerDtoMockData() {
+		// TODO Auto-generated method stub
+		CustomerDto customerDto=new CustomerDto();
+		customerDto.setCustomerId(1);
+		customerDto.setCustomerName("hero");
+		customerDto.setCustomerEmail("roh@gmail.com");
+		customerDto.setMobileNo("3427684587");
+		return customerDto;
+	
+	}
+	
+	@Test
+	void deleteCustomers() {
+		int customerId=1;
+		String msg="customer deleted Succesfully";
+		doNothing().when(customerService).deleteCustomers(customerId);
+		String message=customerController.deleteCustomers(customerId);
+		assert(message.equals(msg));
+		
+	}
+	
+}
+

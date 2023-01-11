@@ -1,0 +1,28 @@
+package com.cg.canteen.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+
+
+import lombok.Data;
+
+@Data
+
+@Entity
+public class Customer {
+
+	@Id
+	@GeneratedValue(Integer integer, String string, String string2, String string3strategy = GenerationType.AUTO)
+	@Column(name="customerId")
+	private Integer customerId;
+	@Column(name="customerName")
+	private String customerName;
+	@Column(name="mobileNo")
+	private String mobileNo;
+	@Column(name="Email")
+	private String Email;
+	
+}

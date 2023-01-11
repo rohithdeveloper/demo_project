@@ -1,0 +1,79 @@
+package com.cg.canteen.controllers;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.cg.canteen.dto.CustomerDto;
+
+import com.cg.canteen.exceptions.CustomerNotFoundException;
+import com.cg.canteen.exceptions.ProductIdNotFoundException;
+import com.cg.canteen.service.ICustomerServices;
+
+
+
+@RestController
+@RequestMapping("/CustomerDetails")
+@CrossOrigin("*")
+public class CustomerController {
+
+	Logger log=LoggerFactory.getLogger(ProductController.class);
+	
+	@Autowired
+	public ICustomerServices customerService;
+	
+	@PostMapping("/addcustomer")
+//	public CustomerDto addCustomer (@RequestBody CustomerDto customer) {
+//	CustomerDto customers= customerService.addCustomer(customer);
+//	log.info("products Added successfully");
+//	return customers;
+//	}
+	public String addCustomer(@RequestBody CustomerDto customerdto)
+    {
+        String id = customerService.addEmployee(customerdto);
+        return id;
+    }
+	
+	@GetMapping("/customers/getcustomers")
+	public List<CustomerDto> viewCustomersList(CustomerDto customer){
+		log.info("products viewed successfully by Id");
+		return customerService.viewCustomersList();
+	}
+	
+	@PutMapping("/updatecustomers/{customerId}")
+	public CustomerDto updateCustomers ( @PathVariable("customerId") Integer CustomerId ,@RequestBody CustomerDto customerdto) throws ProductIdNotFoundException
+	{
+		CustomerDto customer =customerService.updateCustomers(CustomerId,customerdto);
+		log.info("view customers by ID");
+		return customer;
+	}
+	
+	@DeleteMapping("/customers/{customerId}")
+	public String deleteCustomers(@PathVariable("customerId") Integer CustomerId) throws CustomerNotFoundException
+	{
+		customerService.deleteCustomers(CustomerId);
+	 log.info("delete customers by ID");
+	return "customer deleted Succesfully";	 
+	}
+	
+	@GetMapping("/getCustomersById/{customerId}")
+	public CustomerDto viewCustomers(@PathVariable("customerId") Integer CustomerId)throws CustomerNotFoundException
+	{
+		CustomerDto customers = customerService.viewCustomers(CustomerId);
+		log.info("view products by Id");
+		return customers;
+	
+	}
+	
+}

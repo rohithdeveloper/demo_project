@@ -1,0 +1,108 @@
+package com.cg.canteen.service.serviceImpl;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.cg.canteen.dto.CustomerDto;
+
+import com.cg.canteen.entity.Customer;
+
+import com.cg.canteen.exceptions.CustomerNotFoundException;
+import com.cg.canteen.repository.CustomerJPARepository;
+
+import com.cg.canteen.service.ICustomerServices;
+
+@Service
+public class CustomerServiceImpl implements ICustomerServices{
+
+	@Autowired
+	public CustomerJPARepository repository;
+
+	
+	@Override
+	public CustomerDto addCustomer(CustomerDto customer) {
+		// TODO Auto-generated method stub
+		Customer c =new Customer();
+		c.setEmail(customer.getEmail());
+		//c.setCustomerId(customer.getCustomerId());
+		c.setCustomerName(customer.getCustomerName());
+		c.setMobileNo(customer.getMobileNo());
+		repository.save(c);
+		return customer;
+	}
+	
+	
+
+	@Override
+	public List<CustomerDto> viewCustomersList() {
+		
+		// TODO Auto-generated method stub
+		
+		 List<CustomerDto> Customer=new ArrayList<>();
+	        List<Customer> listCustomers=repository.findAll();
+	        listCustomers.stream().forEach(customer-> {
+	        	CustomerDto customerdto=new CustomerDto();
+	        	customerdto.setEmail(customer.getEmail());
+	        	customerdto.setCustomerId(customer.getCustomerId());
+	        	customerdto.setCustomerName(customer.getCustomerName());
+	        	customerdto.setMobileNo(customer.getMobileNo());
+	        	Customer.add(customerdto);
+	        });
+		
+			return Customer;
+	
+	}
+
+	@Override
+	public CustomerDto updateCustomers(Integer customerId, CustomerDto customerdto) {
+		// TODO Auto-generated method stub
+		Customer c =repository.findById(customerId).orElseThrow(()-> new CustomerNotFoundException("no customer with"+customerId));
+		c.setEmail(customerdto.getEmail());
+		//c.setCustomerId(customerdto.getCustomerId());
+		c.setCustomerName(customerdto.getCustomerName());
+		c.setMobileNo(customerdto.getMobileNo());
+		repository.save(c);
+	    return customerdto;
+		
+	}
+
+	@Override
+	public void deleteCustomers(Integer customerId) {
+		// TODO Auto-generated method stub
+		repository.deleteById(customerId);
+		
+	}
+
+	@Override
+	public CustomerDto viewCustomers(Integer customerId) {
+		// TODO Auto-generated method stub
+		// TODO Auto-generated method stub
+		Customer customerdto=repository.findById(customerId).orElseThrow(()-> new CustomerNotFoundException("no customer with"+customerId));
+		CustomerDto c =new CustomerDto();
+		c.setEmail(customerdto.getEmail());
+		c.setCustomerId(customerdto.getCustomerId());
+		c.setCustomerName(customerdto.getCustomerName());
+		c.setMobileNo(customerdto.getMobileNo());
+				
+				return c;
+	
+	}
+
+	@Override
+	public List<CustomerDto> viewCustomersList(CustomerDto customer) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
+	
+
+	
+
+	
+
+}

@@ -1,0 +1,10 @@
+package com.cg.canteen.repository;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+
+import com.cg.canteen.entity.Customer;
+
+
+public interface CustomerJPARepository extends JpaRepository<Customer,Integer>{
+
+}
